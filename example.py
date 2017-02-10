@@ -10,9 +10,9 @@ from dream import *
 img0 = PIL.Image.open('pilatus800.jpg')
 img0 = np.float32(img0)
 
-start = clock()
-
 layer = 'mixed4d_3x3_bottleneck_pre_relu'
+
+start = clock()
 
 render_deepdream(tf.square(T(layer)), img0, layer + '_non.png')
 render_deepdream(T(layer)[:, :, :, 139], img0, 'flower_non.png')

@@ -210,13 +210,49 @@ def render_lap_deepdream(t_obj, img0=img_noise, filename='out.jpg', lap_n=4,
 
 
 def main():
-    # parser = ArgumentParser()
+    img0_name = 'pilatus800.jpg'
 
-    img0 = PIL.Image.open('pilatus800.jpg')
+    parser = ArgumentParser()
+    parser.add_argument('-l', '--layer',
+                        help='layer name',
+                        default='mixed5b_3x3_bottleneck_pre_relu')
+    parser.add_argument('-i', '--image',
+                        help='source image',
+                        default=img0_name)
+    parser.add_argument('-o', '--output',
+                        help='output file',
+                        default='out.jpg')
+    parser.add_argument('--lap', dest='lap_n',
+                        help='lap_n (0 for not using Laplacian pyramid)',
+                        default=4, type=int)
+    parser.add_argument('--iter', dest='iter_n',
+                        help='iter_n',
+                        default=10, type=int)
+    parser.add_argument('--step', dest='step',
+                        help='step',
+                        default=1.5, type=float)
+    parser.add_argument('--octave', dest='octave_n',
+                        help='octave_n',
+                        default=4, type=int)
+    parser.add_argument('--scale', dest='octave_scale',
+                        help='octave_scale',
+                        default=1.4, type=float)
+    args = parser.parse_args()
+
+    img0 = PIL.Image.open(args.image)
     img0 = np.float32(img0)
-    # layer = 'mixed5b_3x3_bottleneck_pre_relu'
-    # render_deepdream(tf.square(T(layer)), img0, layer + '_non.png')
-    # render_lap_deepdream(tf.square(T(layer)), img0, layer + '_lap.png')
+    if args.lap_n > 0:
+        render_lap_deepdream(tf.square(T(args.layer)), lap_n=args.lap_n,
+                             img0=img0, filename=args.output,
+                             iter_n=args.iter_n, step=args.step,
+                             octave_n=args.octave_n,
+                             octave_scale=args.octave_scale)
+    else:
+        render_deepdream(tf.square(T(args.layer)),
+                         img0=img0, filename=args.output,
+                         iter_n=args.iter_n, step=args.step,
+                         octave_n=args.octave_n,
+                         octave_scale=args.octave_scale)
 
 
 if __name__ == '__main__':
