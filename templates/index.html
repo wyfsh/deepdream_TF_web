@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-content">
+  <div class="container-fluid">
+    <h2>
+      <a href="https://github.com/google/deepdream">DeepDream</a>
+      with
+      <a href="https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/tutorials/deepdream">TensorFlow</a>
+    </h2>
+  </div>
+  <div class="container-fluid">
+    <form action="" method=post enctype=multipart/form-data>
+      <label for="upload-image">Upload Image</label>
+      <input class="form-control" type="file" name="file" id="upload-image" accept=".png,.jpg,.jpeg">
+      <p class="help-block">PNG, JPG, JPEG only. Size < 8 MB</p>
+      <button type="submit" class="btn btn-primary">Dream</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

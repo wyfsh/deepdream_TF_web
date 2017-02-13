@@ -2,13 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import os
-from flask import Flask, request, redirect, url_for, send_from_directory
-from werkzeug import secure_filename
 from time import strftime
+from flask import Flask, request, redirect, url_for
+from flask import render_template, send_from_directory
+from flask_bootstrap import Bootstrap
 
 import PIL.Image
 import numpy as np
 import tensorflow as tf
+
 from dream import *
 
 UPLOAD_FOLDER = 'upload/'
@@ -18,10 +20,14 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['RESULT_FOLDER'] = RESULT_FOLDER
+# app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
+bootstrap = Bootstrap(app)
 
 
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+    if '.' in filename:
+        return filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return False
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -29,32 +35,22 @@ def upload():
     if request.method == 'POST':
         file = request.files['file']
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            filename = strftime('%Y%m%d%H%M%S') + '.' + filename.rsplit('.', 1)[1]
+            extension = file.filename.rsplit('.', 1)[1].lower()
+            filename = strftime('%Y%m%d%H%M%S') + '.' + extension
             fullpath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(fullpath)
-
             filename = 'd' + filename
             dream(fullpath, filename)
-
             return redirect(url_for('download', filename=filename))
-
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form action="" method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-         <input type=submit value=Upload>
-    </form>
-    '''
+    return render_template('index.html')
 
 
 def dream(fullpath, filename):
     img0 = PIL.Image.open(fullpath)
     img0 = np.float32(img0)
-    layer = 'mixed3a'  # 'mixed4c'
+    layer = 'mixed4c'  # 'mixed3a'
     render_lap_deepdream(tf.square(T(layer)), img0, filename)
+    # render_deepdream(tf.square(T(layer)), img0, filename)
 
 
 @app.route('/dream/<filename>')

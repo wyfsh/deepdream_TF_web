@@ -1,0 +1,41 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block html_attribs %} lang="zh-CN" {% endblock %}
+
+{% block title %} DeepDream - Saturn {% endblock %}
+
+{% block metas %}
+{{ super() }}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/styles.css')}}">
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="">
+        <span class="glyphicon glyphicon-object-align-left" aria-hidden="true"></span>
+      </a>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<footer>
+  {% block footer %}
+  <div class="container-fluid">
+    <p>© 2017 Yifan Wang</p>
+  </div>
+  {% endblock %}
+</footer>
+
+{% endblock%}

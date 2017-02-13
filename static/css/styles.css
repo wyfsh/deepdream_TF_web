@@ -1,0 +1,32 @@
+body {
+  min-height: 100%;
+}
+
+div.page-content {
+  padding-top: 50px;
+  margin: auto;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+div.page-content div {
+  margin: 30px;
+}
+
+div.page-content h2 {
+  text-align: center;
+}
+
+footer {
+  margin: auto;
+  position: absolute;
+  left: 50%;
+  bottom: 0%;
+  -webkit-transform: translate(-50%,0%);
+  -ms-transform: translate(-50%,0%);
+  transform: translate(-50%,0%);
+}
