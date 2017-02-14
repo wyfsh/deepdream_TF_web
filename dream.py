@@ -210,12 +210,13 @@ def render_lap_deepdream(t_obj, img0=img_noise, filename='out.jpg', lap_n=4,
 
 
 def main():
+    layer_name = 'mixed5b_3x3_bottleneck_pre_relu'
     img0_name = 'pilatus800.jpg'
 
     parser = ArgumentParser()
     parser.add_argument('-l', '--layer',
                         help='layer name',
-                        default='mixed5b_3x3_bottleneck_pre_relu')
+                        default=layer_name)
     parser.add_argument('-i', '--image',
                         help='source image',
                         default=img0_name)
