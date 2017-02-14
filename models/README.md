@@ -14,6 +14,6 @@ The network we use here is the [GoogLeNet](https://arxiv.org/abs/1409.4842) arch
 
 ## Use your own model
 
-Of course you can use your own model. Put your neural network model here, and set its filename to [`model_fn`](dream.py#L12) variable in `dream.py`.
+Of course you can use your own model. Put your neural network model here, and set its filename to [`model_fn`](../dream.py#L12) variable in `dream.py`.
 
 Note that you probably also need to update those layers' names and related functions in the code instead of using the ones.
