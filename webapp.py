@@ -46,7 +46,7 @@ def upload():
 
 
 def dream(fullpath, filename):
-    img0 = PIL.Image.open(fullpath)
+    img0 = PIL.Image.open(fullpath).convert('RGB')
     img0 = np.float32(img0)
     layer = 'mixed4c'  # 'mixed3a'
     render_lap_deepdream(tf.square(T(layer)), img0, filename)

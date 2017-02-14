@@ -34,7 +34,7 @@ img_noise = np.random.uniform(size=(224, 224, 3)) + 100.0
 
 
 def savearray(a, filename, fmt='jpeg'):
-    if '.png' in filename:
+    if '.png' in filename.lower():
         fmt = 'png'
     a = np.uint8(np.clip(a, 0, 1) * 255)
     PIL.Image.fromarray(a).save('result/' + filename, fmt)
@@ -240,7 +240,8 @@ def main():
                         default=1.4, type=float)
     args = parser.parse_args()
 
-    img0 = PIL.Image.open(args.image)
+    # use convert('RGB') to fix png (RGBA) problem
+    img0 = PIL.Image.open(args.image).convert('RGB')
     img0 = np.float32(img0)
     if args.lap_n > 0:
         render_lap_deepdream(tf.square(T(args.layer)), lap_n=args.lap_n,

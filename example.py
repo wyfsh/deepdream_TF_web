@@ -7,7 +7,8 @@ from time import clock
 
 from dream import *
 
-img0 = PIL.Image.open('pilatus800.jpg')
+# use convert('RGB') to fix png (RGBA) problem
+img0 = PIL.Image.open('pilatus800.jpg').convert('RGB')
 img0 = np.float32(img0)
 
 layer = 'mixed4d_3x3_bottleneck_pre_relu'
